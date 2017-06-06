@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html ng-app="blog">
+<head>
+	<title>MyBlog</title>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="stylesheet.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<script type="text/javascript" src="frontend.js"></script>
+</head>
+<body ng-controller="mainControl as ctrl">
+	<nav class="navbar navbar-inverse">
+	  	<div class="container-fluid">
+		    <div class="navbar-header">
+		      	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#Navbar">
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>                        
+			    </button>
+			    <a class="navbar-brand" href ng-click="ctrl.setAllPosts()">MyBlog</a>
+			</div>
+			<div class="collapse navbar-collapse" id="Navbar">
+			    <ul class="nav navbar-nav">
+				    <li ng-class="{'active' : ctrl.isActive(1)}"><a href ng-click="ctrl.setAllPosts()"><span class="navbar-item">All Posts</span></a></li>
+				    <li ng-class="{'active' : ctrl.isActive(2)}"><a href ng-click="ctrl.setAllUsers()"><span class="navbar-item">Users</span></a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<br>
+	<div ng-show="ctrl.isActive(1)">
+		<h2 ng-show="ctrl.showName">Posts by {{ctrl.curUser}}</h2>
+		<input type="text" class="search form-control" ng-model="psearch" placeholder="Search By Post Content">
+		<div id="post_data" ng-repeat="post in ctrl.posts | filter : psearch" ng-controller="postControl as pctrl">
+			<h2>Post : {{post.id}}</h2>
+			<h3>{{post.title}}</h3>
+			<p class="postBody">
+				{{post.body}}
+			</p>
+			<button class="btn btn-primary" ng-click="pctrl.postComments(post.id)">Comments</button>
+			<button class="btn btn-info" ng-click="ctrl.userPosts(post.userId)">More from User</button>
+			<button class="btn btn-success" ng-click="ctrl.userShow(post.userId)">User Details</button>
+
+			<div ng-show="pctrl.showComments" id="comment-box">
+				<h2>Comments for the post</h2>
+				<div ng-repeat="comment in pctrl.comments">
+					<br>
+					<p id="comment">
+						{{comment.body}}
+					</p>
+					<h5><b>Posted By</b></h5>
+					<cite>
+					<h5>Name : {{comment.name}}</h5>
+					<h5>Email : {{comment.email}}</h5>
+					</cite>
+					<hr>
+				</div>
+				<button class="btn btn-warning" ng-click="pctrl.hideComments()">Hide</button>
+			</div>
+
+			<hr>
+		</div>		
+	</div>
+
+	<div ng-show="ctrl.isActive(2)">
+	<input type="text" class="search form-control" ng-model="usearch" placeholder="Search By User Name">
+		<div ng-repeat="user in ctrl.users | filter : usearch" ng-controller="userControl as uctrl">
+			<h3>{{user.name}}</h3>
+			<h4>Username : {{user.username}}</h4>
+			<h4>Email : {{user.email}}</h4>
+			<button class="btn btn-primary" ng-click="uctrl.more()">More Info</button>
+			<button class="btn btn-info" ng-click="ctrl.userPosts(user.id)">Posts By User</button>
+			<div ng-show="uctrl.showMore">
+				<h4><b>Address</b></h4>
+				<p id="address">
+					{{user.address.suite}}, {{user.address.street}}<br>
+					{{user.address.city}} - {{user.address.zipcode}}
+				</p>
+				<h4><b>Phone</b> : {{user.phone}}</h4>
+				<h4><b>Website</b> : {{user.website}}</h4>
+				<h4><b>Company</b> : {{user.company.name}} ({{user.company.catchPhrase}})</h4>
+				<button class="btn btn-warning" ng-click="uctrl.hide()">Hide</button>
+			</div>
+			<hr>
+		</div>
+	</div>
+
+</body>
+</html>

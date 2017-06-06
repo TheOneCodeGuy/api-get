@@ -1,0 +1,56 @@
+.navbar-item
+{
+	padding-left: 20px;
+	font-size: 20px;
+	font-weight: 600;
+}
+
+.navbar-brand
+{
+	font-size: 22px;
+	font-weight: 600;
+	color: white;
+	margin: 0px 10px 0px 20px;
+}
+
+.btn
+{
+	margin-left: 20px;
+}
+
+p, h2, h3, h4, h5
+{
+	margin-left: 20px;
+}
+
+#address
+{
+	margin-left: 28px;
+	margin-top: -10px;
+	font-size: 17px;
+}
+
+#comment
+{
+	margin-top: 10px;
+	margin-left: 4px; 
+}
+
+.postBody
+{
+	width: 350px;
+}
+
+#comment-box
+{
+	margin-left: 20px;
+    margin-top: 10px;
+    border-style: ridge;
+    border-color: black;
+    padding: 10px;
+}
+.search
+{
+	width: 60%;
+	margin-left: 2%;
+}
